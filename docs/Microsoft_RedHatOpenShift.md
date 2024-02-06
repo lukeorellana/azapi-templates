@@ -83,6 +83,137 @@ resource "azapi_resource" "symbolicname" {
 
 ```
 
+### openShiftClusters
+
+| Name | Description | Value |
+|-|-|-|
+| name | The resource name | string (required) |
+| location | The geo-location where the resource lives | string (required) |
+| tags | Resource tags. | Dictionary of tag names and values. SeeTags in templates |
+| properties | The cluster properties. | OpenShiftClusterProperties |
+
+
+### OpenShiftClusterProperties
+
+| Name | Description | Value |
+|-|-|-|
+| apiserverProfile | The cluster API server profile. | APIServerProfile |
+| clusterProfile | The cluster profile. | ClusterProfile |
+| consoleProfile | The console profile. | ConsoleProfile |
+| ingressProfiles | The cluster ingress profiles. | IngressProfile[] |
+| masterProfile | The cluster master profile. | MasterProfile |
+| networkProfile | The cluster network profile. | NetworkProfile |
+| provisioningState | The cluster provisioning state. | 'AdminUpdating''Creating''Deleting''Failed''Succeeded''Updating' |
+| servicePrincipalProfile | The cluster service principal profile. | ServicePrincipalProfile |
+| workerProfiles | The cluster worker profiles. | WorkerProfile[] |
+
+
+### APIServerProfile
+
+| Name | Description | Value |
+|-|-|-|
+| ip | The IP of the cluster API server. | string |
+| url | The URL to access the cluster API server. | string |
+| visibility | API server visibility. | 'Private''Public' |
+
+
+### ClusterProfile
+
+| Name | Description | Value |
+|-|-|-|
+| domain | The domain for the cluster. | string |
+| fipsValidatedModules | If FIPS validated crypto modules are used | 'Disabled''Enabled' |
+| pullSecret | The pull secret for the cluster. | string |
+| resourceGroupId | The ID of the cluster resource group. | string |
+| version | The version of the cluster. | string |
+
+
+### ConsoleProfile
+
+| Name | Description | Value |
+|-|-|-|
+| url | The URL to access the cluster console. | string |
+
+
+### IngressProfile
+
+| Name | Description | Value |
+|-|-|-|
+| ip | The IP of the ingress. | string |
+| name | The ingress profile name. | string |
+| visibility | Ingress visibility. | 'Private''Public' |
+
+
+### MasterProfile
+
+| Name | Description | Value |
+|-|-|-|
+| diskEncryptionSetId | The resource ID of an associated DiskEncryptionSet, if applicable. | string |
+| encryptionAtHost | Whether master virtual machines are encrypted at host. | 'Disabled''Enabled' |
+| subnetId | The Azure resource ID of the master subnet. | string |
+| vmSize | The size of the master VMs. | string |
+
+
+### NetworkProfile
+
+| Name | Description | Value |
+|-|-|-|
+| loadBalancerProfile | The cluster load balancer profile. | LoadBalancerProfile |
+| outboundType | The OutboundType used for egress traffic. | 'Loadbalancer''UserDefinedRouting' |
+| podCidr | The CIDR used for OpenShift/Kubernetes Pods. | string |
+| serviceCidr | The CIDR used for OpenShift/Kubernetes Services. | string |
+
+
+### LoadBalancerProfile
+
+| Name | Description | Value |
+|-|-|-|
+| allocatedOutboundPorts | The desired number of allocated SNAT ports per VM. Allowed values are in the range of 0 to 64000 (inclusive). The default value is 1024. | int |
+| managedOutboundIps | The desired managed outbound IPs for the cluster public load balancer. | ManagedOutboundIPs |
+| outboundIpPrefixes | The desired outbound IP Prefix resources for the cluster load balancer. | OutboundIPPrefix[] |
+| outboundIps | The desired outbound IP resources for the cluster load balancer. | OutboundIP[] |
+
+
+### ManagedOutboundIPs
+
+| Name | Description | Value |
+|-|-|-|
+| count | Count represents the desired number of IPv4 outbound IPs created and managed by Azure for the cluster public load balancer.  Allowed values are in the range of 1 - 20.  The default value is 1. | int |
+
+
+### OutboundIPPrefix
+
+| Name | Description | Value |
+|-|-|-|
+| id | The fully qualified Azure resource id of an IP Prefix resource. | string |
+
+
+### OutboundIP
+
+| Name | Description | Value |
+|-|-|-|
+| id | The fully qualified Azure resource id of the IP address resource. | string |
+
+
+### ServicePrincipalProfile
+
+| Name | Description | Value |
+|-|-|-|
+| clientId | The client ID used for the cluster. | string |
+| clientSecret | The client secret used for the cluster. | string |
+
+
+### WorkerProfile
+
+| Name | Description | Value |
+|-|-|-|
+| count | The number of worker VMs. | int |
+| diskEncryptionSetId | The resource ID of an associated DiskEncryptionSet, if applicable. | string |
+| diskSizeGB | The disk size of the worker VMs. | int |
+| encryptionAtHost | Whether master virtual machines are encrypted at host. | 'Disabled''Enabled' |
+| name | The worker profile name. | string |
+| subnetId | The Azure resource ID of the worker subnet. | string |
+| vmSize | The size of the worker VMs. | string |
 ## Microsoft.RedHatOpenShift/openshiftclusters/machinePool@2023-07-01-preview
 
 ```terraform
@@ -99,6 +230,20 @@ resource "azapi_resource" "symbolicname" {
 
 ```
 
+### openshiftclusters/machinePool
+
+| Name | Description | Value |
+|-|-|-|
+| name | The resource nameSee how to set names and types for child resources inBicep. | string (required) |
+| parent | In Bicep, you can specify the parent resource for a child resource. You only need to add this property when the child resource is declared outside of the parent resource.For more information, seeChild resource outside parent resource. | Symbolic name for resource of type:openshiftclusters |
+| properties | The MachinePool Properties | MachinePoolProperties |
+
+
+### MachinePoolProperties
+
+| Name | Description | Value |
+|-|-|-|
+| resources |  | string |
 ## Microsoft.RedHatOpenShift/openshiftclusters/secret@2023-07-01-preview
 
 ```terraform
@@ -115,6 +260,20 @@ resource "azapi_resource" "symbolicname" {
 
 ```
 
+### openshiftclusters/secret
+
+| Name | Description | Value |
+|-|-|-|
+| name | The resource nameSee how to set names and types for child resources inBicep. | string (required) |
+| parent | In Bicep, you can specify the parent resource for a child resource. You only need to add this property when the child resource is declared outside of the parent resource.For more information, seeChild resource outside parent resource. | Symbolic name for resource of type:openshiftclusters |
+| properties | The Secret Properties | SecretProperties |
+
+
+### SecretProperties
+
+| Name | Description | Value |
+|-|-|-|
+| secretResources | The Secrets Resources. | stringConstraints:Sensitive value. Pass in as a secure parameter. |
 ## Microsoft.RedHatOpenShift/openshiftclusters/syncIdentityProvider@2023-07-01-preview
 
 ```terraform
@@ -131,6 +290,20 @@ resource "azapi_resource" "symbolicname" {
 
 ```
 
+### openshiftclusters/syncIdentityProvider
+
+| Name | Description | Value |
+|-|-|-|
+| name | The resource nameSee how to set names and types for child resources inBicep. | string (required) |
+| parent | In Bicep, you can specify the parent resource for a child resource. You only need to add this property when the child resource is declared outside of the parent resource.For more information, seeChild resource outside parent resource. | Symbolic name for resource of type:openshiftclusters |
+| properties | The SyncIdentityProvider Properties | SyncIdentityProviderProperties |
+
+
+### SyncIdentityProviderProperties
+
+| Name | Description | Value |
+|-|-|-|
+| resources |  | string |
 ## Microsoft.RedHatOpenShift/openshiftclusters/syncSet@2023-07-01-preview
 
 ```terraform
@@ -147,3 +320,17 @@ resource "azapi_resource" "symbolicname" {
 
 ```
 
+### openshiftclusters/syncSet
+
+| Name | Description | Value |
+|-|-|-|
+| name | The resource nameSee how to set names and types for child resources inBicep. | string (required) |
+| parent | In Bicep, you can specify the parent resource for a child resource. You only need to add this property when the child resource is declared outside of the parent resource.For more information, seeChild resource outside parent resource. | Symbolic name for resource of type:openshiftclusters |
+| properties | The Syncsets properties | SyncSetProperties |
+
+
+### SyncSetProperties
+
+| Name | Description | Value |
+|-|-|-|
+| resources | Resources represents the SyncSets configuration. | string |

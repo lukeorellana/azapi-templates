@@ -38,6 +38,53 @@ resource "azapi_resource" "symbolicname" {
 
 ```
 
+### blockchainMembers
+
+| Name | Description | Value |
+|-|-|-|
+| name | The resource name | string (required)Character limit: 2-20Valid characters:Lowercase letters and numbers.Start with lowercase letter.Resource name must be unique across Azure. |
+| location | The GEO location of the blockchain service. | string |
+| tags | Tags of the service which is a list of key value pairs that describes the resource. | Dictionary of tag names and values. SeeTags in templates |
+| sku | Gets or sets the blockchain member Sku. | Sku |
+| properties | Gets or sets the blockchain member properties. | BlockchainMemberProperties |
+
+
+### BlockchainMemberProperties
+
+| Name | Description | Value |
+|-|-|-|
+| consortium | Gets or sets the consortium for the blockchain member. | string |
+| consortiumManagementAccountPassword | Sets the managed consortium management account password. | string |
+| consortiumMemberDisplayName | Gets the display name of the member in the consortium. | string |
+| consortiumRole | Gets the role of the member in the consortium. | string |
+| firewallRules | Gets or sets firewall rules | FirewallRule[] |
+| password | Sets the basic auth password of the blockchain member. | string |
+| protocol | Gets or sets the blockchain protocol. | 'Corda''NotSpecified''Parity''Quorum' |
+| validatorNodesSku | Gets or sets the blockchain validator nodes Sku. | BlockchainMemberNodesSku |
+
+
+### FirewallRule
+
+| Name | Description | Value |
+|-|-|-|
+| endIpAddress | Gets or sets the end IP address of the firewall rule range. | string |
+| ruleName | Gets or sets the name of the firewall rules. | string |
+| startIpAddress | Gets or sets the start IP address of the firewall rule range. | string |
+
+
+### BlockchainMemberNodesSku
+
+| Name | Description | Value |
+|-|-|-|
+| capacity | Gets or sets the nodes capacity. | int |
+
+
+### Sku
+
+| Name | Description | Value |
+|-|-|-|
+| name | Gets or sets Sku name | string |
+| tier | Gets or sets Sku tier | string |
 ## Microsoft.Blockchain/blockchainMembers/transactionNodes@2018-06-01-preview
 
 ```terraform
@@ -62,3 +109,28 @@ resource "azapi_resource" "symbolicname" {
 
 ```
 
+### blockchainMembers/transactionNodes
+
+| Name | Description | Value |
+|-|-|-|
+| name | The resource nameSee how to set names and types for child resources inBicep. | string (required) |
+| location | Gets or sets the transaction node location. | string |
+| parent | In Bicep, you can specify the parent resource for a child resource. You only need to add this property when the child resource is declared outside of the parent resource.For more information, seeChild resource outside parent resource. | Symbolic name for resource of type:blockchainMembers |
+| properties | Gets or sets the blockchain member properties. | TransactionNodeProperties |
+
+
+### TransactionNodeProperties
+
+| Name | Description | Value |
+|-|-|-|
+| firewallRules | Gets or sets the firewall rules. | FirewallRule[] |
+| password | Sets the transaction node dns endpoint basic auth password. | string |
+
+
+### FirewallRule
+
+| Name | Description | Value |
+|-|-|-|
+| endIpAddress | Gets or sets the end IP address of the firewall rule range. | string |
+| ruleName | Gets or sets the name of the firewall rules. | string |
+| startIpAddress | Gets or sets the start IP address of the firewall rule range. | string |
