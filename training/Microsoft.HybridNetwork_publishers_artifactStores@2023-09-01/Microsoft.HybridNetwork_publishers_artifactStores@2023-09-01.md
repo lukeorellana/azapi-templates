@@ -1,0 +1,52 @@
+```terraform
+resource "azapi_resource" "symbolicname" {
+  type = "Microsoft.HybridNetwork/publishers/artifactStores@2023-09-01"
+  name = "string"
+  location = "string"
+  parent_id = "string"
+  tags = {
+    tagName1 = "tagValue1"
+    tagName2 = "tagValue2"
+  }
+  body = jsonencode({
+    properties = {
+      managedResourceGroupConfiguration = {
+        location = "string"
+        name = "string"
+      }
+      replicationStrategy = "string"
+      storeType = "string"
+    }
+  })
+}
+
+```
+
+### publishers/artifactStores
+
+| Name | Description | Value |
+|-|-|-|
+| name | The resource nameSee how to set names and types for child resources inBicep. | string (required) |
+| location | The geo-location where the resource lives | string (required) |
+| tags | Resource tags. | Dictionary of tag names and values. SeeTags in templates |
+| parent | In Bicep, you can specify the parent resource for a child resource. You only need to add this property when the child resource is declared outside of the parent resource.For more information, seeChild resource outside parent resource. | Symbolic name for resource of type:publishers |
+| properties | ArtifactStores properties. | ArtifactStorePropertiesFormat |
+
+
+### ArtifactStorePropertiesFormat
+
+| Name | Description | Value |
+|-|-|-|
+| managedResourceGroupConfiguration |  | ArtifactStorePropertiesFormatManagedResourceGroupCon... |
+| replicationStrategy | The replication strategy. | 'SingleReplication''Unknown' |
+| storeType | The artifact store type. | 'AzureContainerRegistry''AzureStorageAccount''Unknown' |
+
+
+### ArtifactStorePropertiesFormatManagedResourceGroupCon...
+
+| Name | Description | Value |
+|-|-|-|
+| location | The managed resource group location. | string |
+| name | The managed resource group name. | string |
+
+
