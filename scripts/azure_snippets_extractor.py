@@ -35,6 +35,7 @@ def extract_code_snippets_and_types(soup):
     extracted_snippets = []  # This will hold dictionaries of snippets and their types
     for snippet in snippets:
         # Check if the snippet contains "resource \"azapi_resource\""
+        print(snippet)
         if 'resource "azapi_resource"' in snippet.text:
             match = re.search(r'type\s*=\s*"([^"]+)"', snippet.text)
             if match:
@@ -118,19 +119,35 @@ def append_unique_snippets_to_file(filename, extracted_snippets, markdown_tables
 
 def group_and_write_markdown(extracted_snippets, tables, base_directory='../.training'):
     for snippet_dict in extracted_snippets:
-        # Extract type value from each dict and replace '/' with '_'
-        type_value = snippet_dict['type'].replace('/', '_')
+        type_value = snippet_dict['type']
+        # Split the type_value into parts to safely handle service, resource type, and version
+        parts = type_value.split('/')
+        if len(parts) > 1:
+            service_resource = parts[0]
+            resource_and_version = parts[1].split('@') if '@' in parts[1] else [parts[1], "latest"]
+            resource_type = resource_and_version[0]
+            version = resource_and_version[1]
+        else:
+            # Fallback if the type_value does not follow the expected format
+            service_resource = parts[0]
+            resource_type = "unknown"
+            version = "latest"
 
-        # Directory and filename creation remains the same
-        if type_value.startswith("Microsoft"):  # Ensure it starts with "Microsoft"
-            directory = os.path.join(base_directory, type_value)
+        # Construct the service name and directory name
+        service_name = service_resource.split('_')[0]
+        directory_name = f"{service_name}"
+
+        # Ensure version is correctly formatted or defaults to "latest"
+        formatted_version = version.replace("-", "_") if version and version != "latest" else "latest"
+        formatted_filename = f"{service_resource}@{formatted_version}.md"
+
+        if service_name.startswith("Microsoft"):  # Ensure it starts with "Microsoft"
+            directory = os.path.join(base_directory, directory_name)
             ensure_directory_exists(directory)  # Ensure the directory exists
-            filename = os.path.join(directory, f"{type_value}.md")
+            filename = os.path.join(directory, formatted_filename)
             append_unique_snippets_to_file(filename, [snippet_dict], tables)
         else:
-            # Skip creation if type_value doesn't start with "Microsoft"
-            print(f"Skipping {type_value} as it does not conform to expected formatting.")
-
+            print(f"Skipping {directory_name} as it does not conform to expected formatting.")
 
 
 def main():
